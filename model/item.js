@@ -1,7 +1,7 @@
-const mongoose = require('mongoose')
+const Mongoose = require('mongoose')
 
-const Book = new mongoose.Schema({
-  name: {
+const Book = new Mongoose.Schema({
+  Name: {
     type: String,
     required: true
   },
@@ -11,4 +11,4 @@ const Book = new mongoose.Schema({
   }
 })
 
-module.exports = mongoose.model('Book', Book)
+module.exports = Mongoose.model('Book', Book)

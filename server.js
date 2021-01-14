@@ -24,7 +24,7 @@ App.get('/api/books', (req, res) => {
 
 // Add a new book to the database
 App.post('/api/books/create', (req, res) => {
-  const NewBook = new BookSchema({ name: req.body.name, ISBN: req.body.ISBN })
+  const NewBook = new BookSchema({ Name: req.body.Name, ISBN: req.body.ISBN })
   NewBook.save()
     .then(() => { res.json('Book saved succesfully') })
     .catch(() => { res.json('There was an error, try again') })
