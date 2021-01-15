@@ -32,17 +32,25 @@ App.post('/api/books/create', (req, res) => {
 
 // Delete book from database
 App.post('/api/books/delete', (req, res) => {
-  BookSchema.deleteOne(req.body.id)
-    .then(() => { res.json('Book deleted succesfully') })
-    .catch(() => { res.json('There was an error, try again') })
+  if (BookSchema.exists({ _id: req.body._id }) === true) {
+    BookSchema.findByIdAndDelete(req.body._id)
+      .then(() => { res.json('Book deleted succesfully') })
+      .catch(() => { res.json('There was an error, try again') })
+  } else {
+    res.status(404).json('Book missing from database')
+  }
 })
 
 // Modify book from database
 App.post('/api/books/modify', (req, res) => {
   // Gets the ID, and modifies the collection acording to the data you send on the rest of the JSON
-  BookSchema.findByIdAndUpdate(req.body._id, req.body)
-    .then(() => { res.json('Book modified succesfully') })
-    .catch(() => { res.json('There was an error, try again') })
+  if (BookSchema.exists({ _id: req.body._id }) === true) {
+    BookSchema.findByIdAndUpdate(req.body._id, req.body)
+      .then(() => { res.json('Book modified succesfully') })
+      .catch(() => { res.json('There was an error, try again') })
+  } else {
+    res.status(404).json('Book missing from database')
+  }
 })
 
 // Confirmation from the server to be running
