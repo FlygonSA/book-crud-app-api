@@ -32,7 +32,7 @@ App.post('/api/books/create', (req, res) => {
 
 // Delete book from database
 App.post('/api/books/delete', (req, res) => {
-  BookSchema.deleteOne({ _id: req.body._id })
+  BookSchema.deleteOne(req.body.id)
     .then(() => { res.json('Book deleted succesfully') })
     .catch(() => { res.json('There was an error, try again') })
 })

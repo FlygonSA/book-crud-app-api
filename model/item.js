@@ -1,7 +1,7 @@
 const Mongoose = require('mongoose')
 
 const Book = new Mongoose.Schema({
-  Index:{
+  Index: {
     type: Number,
     required: true
   },
@@ -9,11 +9,11 @@ const Book = new Mongoose.Schema({
     type: String,
     required: true
   },
-  Author:{
-      type: String
+  Author: {
+    type: String
   },
-  Year:{
-      type: Number
+  Year: {
+    type: Number
   },
   ISBN: {
     type: Number,
