@@ -11,6 +11,6 @@
         "ecmaVersion": 12
     },
     "rules": {
-        "camelcase":[2, {"properties":"always"}]
+        "camelcase":[1, {"properties":"always"}]
     }
 }
