@@ -1,57 +1,62 @@
-require('dotenv').config()
-const Express = require('express')
-const Mongoose = require('mongoose')
-const BookSchema = require('./model/item')
-const App = Express()
+require('dotenv').config();
+const express = require('express');
+const mongoose = require('mongoose');
+const BookSchema = require('./model/item');
 
-// Connection to Db
-Mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
+const app = express();
+
+// Connection to db
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false,
+});
 
 // Handleing connection
-const Db = Mongoose.connection
-Db.on('error', (error) => { console.error(error) })
-Db.once('open', () => { console.log('Connected to database') })
+const db = mongoose.connection;
+db.on('error', (error) => { console.error(error); });
+db.once('open', () => { console.log('Connected to database'); });
 
 // JSON Parser middleware
-App.use(Express.json())
+app.use(express.json());
 
 // Middleware
 
 // Get books from the database
-App.get('/api/books', (req, res) => {
-  BookSchema.find().then(books => res.json(books))
-})
+app.get('/api/books', (req, res) => {
+  BookSchema.find().then((books) => res.json(books));
+});
 
 // Add a new book to the database
-App.post('/api/books/create', (req, res) => {
-  const NewBook = new BookSchema(req.body)
-  NewBook.save()
-    .then(() => { res.json('Book saved succesfully') })
-    .catch(() => { res.json('There was an error, try again') })
-})
+app.post('/api/books/create', (req, res) => {
+  const newBook = new BookSchema(req.body);
+  newBook.save()
+    .then(() => { res.json('Book saved succesfully'); })
+    .catch(() => { res.json('There was an error, try again'); });
+});
 
 // Delete book from database
-App.post('/api/books/delete', (req, res) => {
-  if (BookSchema.exists({ _id: req.body._id }) === true) {
-    BookSchema.findByIdAndDelete(req.body._id)
-      .then(() => { res.json('Book deleted succesfully') })
-      .catch(() => { res.json('There was an error, try again') })
+app.post('/api/books/delete', (req, res) => {
+  if (BookSchema.exists({ id: req.body.id }) === true) {
+    BookSchema.findByIdAndDelete(req.body.id)
+      .then(() => { res.json('Book deleted succesfully'); })
+      .catch(() => { res.json('There was an error, try again'); });
   } else {
-    res.status(404).json('Book missing from database')
+    res.status(404).json('Book missing from database');
   }
-})
+});
 
 // Modify book from database
-App.post('/api/books/modify', (req, res) => {
+app.post('/api/books/modify', (req, res) => {
   // Gets the ID, and modifies the collection acording to the data you send on the rest of the JSON
-  if (BookSchema.exists({ _id: req.body._id }) === true) {
-    BookSchema.findByIdAndUpdate(req.body._id, req.body)
-      .then(() => { res.json('Book modified succesfully') })
-      .catch(() => { res.json('There was an error, try again') })
+  if (BookSchema.exists({ id: req.body.id }) === true) {
+    BookSchema.findByIdAndUpdate(req.body.id, req.body)
+      .then(() => { res.json('Book modified succesfully'); })
+      .catch(() => { res.json('There was an error, try again'); });
   } else {
-    res.status(404).json('Book missing from database')
+    res.status(404).json('Book missing from database');
   }
-})
+});
 
 // Confirmation from the server to be running
-const Port = App.listen(process.env.PORT || '8080', () => { console.log(`Server running on port ${Port.address().port}`) })
+const port = app.listen(process.env.PORT || '8080', () => { console.log(`Server running on port ${port.address().port}`); });
