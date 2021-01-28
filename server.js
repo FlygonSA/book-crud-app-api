@@ -37,7 +37,7 @@ app.post('/api/books/create', (req, res) => {
 
 // Delete book from database
 app.post('/api/books/delete', (req, res) => {
-  if (BookSchema.exists({ id: req.body.id }) === true) {
+  if (BookSchema.exists({ id: req.body.id })) {
     BookSchema.findByIdAndDelete(req.body.id)
       .then(() => { res.json('Book deleted succesfully'); })
       .catch(() => { res.json('There was an error, try again'); });
@@ -49,7 +49,7 @@ app.post('/api/books/delete', (req, res) => {
 // Modify book from database
 app.post('/api/books/modify', (req, res) => {
   // Gets the ID, and modifies the collection acording to the data you send on the rest of the JSON
-  if (BookSchema.exists({ id: req.body.id }) === true) {
+  if (BookSchema.exists({ id: req.body.id })) {
     BookSchema.findByIdAndUpdate(req.body.id, req.body)
       .then(() => { res.json('Book modified succesfully'); })
       .catch(() => { res.json('There was an error, try again'); });
