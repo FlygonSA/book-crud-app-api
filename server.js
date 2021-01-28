@@ -17,6 +17,9 @@ const db = mongoose.connection;
 db.on('error', (error) => { console.error(error); });
 db.once('open', () => { console.log('Connected to database'); });
 
+// Confirmation from the server to be running
+const port = app.listen(process.env.PORT || '8080', () => { console.log(`Server running on port ${port.address().port}`); });
+
 // JSON Parser middleware
 app.use(express.json());
 
@@ -57,6 +60,3 @@ app.post('/api/books/modify', (req, res) => {
     res.status(404).json('Book missing from database');
   }
 });
-
-// Confirmation from the server to be running
-const port = app.listen(process.env.PORT || '8080', () => { console.log(`Server running on port ${port.address().port}`); });
