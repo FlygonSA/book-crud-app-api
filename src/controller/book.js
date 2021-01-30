@@ -1,10 +1,11 @@
-const book = require('../dao/book');
+const bookDao = require('../dao/book');
+const bookModel = require("../model/book")
 
 exports.getAllBooks = async (req, res) => {
   try {
     // Gets all collections on database and returns them
-    const allBooks = await book.getAll({});
-    res.json(allBooks);
+    const allBooks = new bookDao
+    res.json(await allBooks.getAll());
   } catch (error) {
     // If no collections are founded it returns a 404 error
     res
@@ -16,8 +17,8 @@ exports.getAllBooks = async (req, res) => {
 exports.getBookById = async (req, res) => {
   try {
     // Gets a collection by the ID passed on the body
-    const bookReturned = await book.getById(req.body.id);
-    res.json(bookReturned);
+    const book = new bookDao;
+    res.json(await book.getById(req.body.id));
   } catch (error) {
     // If no collections are founded it returns a 404 error
     res
@@ -29,6 +30,7 @@ exports.getBookById = async (req, res) => {
 exports.createBook = async (req, res) => {
   try {
     // Creates a collection on the database with the parameters passed on the body
+    const book = new bookDao
     await book.create(req.body);
     res.json({ message: 'Book created sucessfully' });
   } catch (error) {
@@ -36,14 +38,16 @@ exports.createBook = async (req, res) => {
     res
       .status(400)
       .json({ message: 'There was an error, please try again' });
+    throw Error
   }
 };
 
 exports.editBook = async (req, res) => {
   // Checks if the collection exists
-  if (book.exists({ id: req.body.id })) {
+  if (bookModel.exists({ id: req.body.id })) {
     try {
       // Modfies the collection acording to what is passed on the body
+      const book = new bookDao
       await book.edit(req.body.id, req.body);
       res.json({ message: 'Book sucessfully modified' });
     } catch (error) {
@@ -62,9 +66,10 @@ exports.editBook = async (req, res) => {
 
 exports.deleteBook = async (req, res) => {
   // Checks if the collection exists
-  if (book.exists({ id: req.body.id })) {
+  if (bookModel.exists({ id: req.body.id })) {
     try {
       // Deletes the collection acording to the ID passed on the body
+      const book = new bookDao
       await book.delete(req.body.id);
       res.json({ message: 'Book sucessfully deleted' });
     } catch (error) {
