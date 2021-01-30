@@ -1,8 +1,6 @@
 const book = require('../dao/book');
 
-const controller = {};
-
-controller.getAllBooks = async (req, res) => {
+exports.getAllBooks = async (req, res) => {
   try {
     // Gets all collections on database and returns them
     const allBooks = await book.getAll({});
@@ -15,7 +13,7 @@ controller.getAllBooks = async (req, res) => {
   }
 };
 
-controller.getBookById = async (req, res) => {
+exports.getBookById = async (req, res) => {
   try {
     // Gets a collection by the ID passed on the body
     const bookReturned = await book.getById(req.body.id);
@@ -28,7 +26,7 @@ controller.getBookById = async (req, res) => {
   }
 };
 
-controller.createBook = async (req, res) => {
+exports.createBook = async (req, res) => {
   try {
     // Creates a collection on the database with the parameters passed on the body
     await book.create(req.body);
@@ -41,7 +39,7 @@ controller.createBook = async (req, res) => {
   }
 };
 
-controller.editBook = async (req, res) => {
+exports.editBook = async (req, res) => {
   // Checks if the collection exists
   if (book.exists({ id: req.body.id })) {
     try {
@@ -62,7 +60,7 @@ controller.editBook = async (req, res) => {
   }
 };
 
-controller.deleteBook = async (req, res) => {
+exports.deleteBook = async (req, res) => {
   // Checks if the collection exists
   if (book.exists({ id: req.body.id })) {
     try {
@@ -82,4 +80,3 @@ controller.deleteBook = async (req, res) => {
   }
 };
 
-module.exports = controller;
