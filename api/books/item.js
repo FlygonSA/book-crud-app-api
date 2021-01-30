@@ -1,6 +1,6 @@
-const Mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
-const Book = new Mongoose.Schema({
+const book = new mongoose.Schema({
   Index: {
     type: Number,
     required: true,
@@ -21,4 +21,4 @@ const Book = new Mongoose.Schema({
   },
 });
 
-module.exports = Mongoose.model('Book', Book);
+module.exports = book
