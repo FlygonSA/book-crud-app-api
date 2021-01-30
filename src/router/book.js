@@ -1,4 +1,4 @@
-const controller = require('./books/controller');
+const controller = require('../controller/book');
 
 module.exports = (router) => {
   router.get('/getAll', controller.getAllBooks);

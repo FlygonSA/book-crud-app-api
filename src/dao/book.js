@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const bookSchema = require('./item');
+const bookSchema = require('../model/book');
 
 bookSchema.statics = {
   // Get all books on the database

@@ -1,4 +1,4 @@
-const book = require('./dao');
+const book = require('../dao/book');
 
 const controller = {};
 
