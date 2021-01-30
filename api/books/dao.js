@@ -8,8 +8,13 @@ bookSchema.statics = {
     getBooksById: (id) => {
         this.findById(id)
     },
+    createBook: (data) => {
+        const newBook = new this(data)
+        newBook.save()
+    },
     editBook: (id,data) => {
         this.findByIdAndUpdate(id,data)
+        
     },
     deleteBook: (id) => {
         this.findByIdAndRemove(id)
